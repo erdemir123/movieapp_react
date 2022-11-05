@@ -1,17 +1,20 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { api_key, base_url } from "../constants/API";
+import { api_key, api_url, base_url } from "../constants/API";
 import { UseLoginContext } from "../context/LoginProvider";
+
 
 const useMainLogic = () => {
   const [card, setCard] = useState([]);
   const navigate = useNavigate();
-  const { user, setUser, query, setQuery, dark, setDark } = UseLoginContext();
-
+  const { loginUser, setloginUser, query, setQuery, dark, setDark } =
+    UseLoginContext();
+  // const api_key = `api_key=0924e6736c5942a0471ffc6954cb4ed2`;
+  // const base_url = `https://api.themoviedb.org/3`;
   const search_url = base_url + `/search/movie?` + api_key + `&query=` + query;
-
+  ;
   const handleSearch = () => {
-    if (user.email && user.password) {
+    if (loginUser.email && loginUser.password) {
       setQuery("");
       fetch(search_url)
         .then((res) => {
@@ -27,12 +30,7 @@ const useMainLogic = () => {
       navigate("/login");
     }
   };
-
-  const api_url =
-    base_url +
-    `/discover/movie?language=en-TR&sort_by=popularity.desc&` +
-    api_key;
-
+ 
   useEffect(() => {
     fetch(api_url)
       .then((res) => {
@@ -49,12 +47,12 @@ const useMainLogic = () => {
     handleSearch,
     card,
     setCard,
-    user,
+    loginUser,
+    setloginUser,
     query,
     setQuery,
     dark,
     setDark,
-    api_url,
   };
 };
 

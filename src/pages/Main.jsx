@@ -1,11 +1,10 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React from "react";
 import MovieCard from "../components/MovieCard";
 import Navbar from "../components/Navbar";
 import useMainLogic from "../hooks/useMainLogic";
 
 const Main = () => {
-  const { handleSearch, card, dark, query, setCard, setQuery, setDark } =
+  const { handleSearch, card, dark, query,setQuery, setDark } =
     useMainLogic();
 
   return (

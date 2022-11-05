@@ -3,9 +3,9 @@ import { Navigate, Outlet } from 'react-router-dom'
 import { UseLoginContext } from '../context/LoginProvider'
 
 const PrivateRouter = () => {
-    const { user, setUser } = UseLoginContext()
+    const { loginUser} = UseLoginContext()
   return (
-    (user.email && user.password) ? <Outlet/> : (alert("Lütfen Giriş Yapınız") , <Navigate to="/" /> )
+    (loginUser.email && loginUser.password) ? <Outlet/> : (alert("Lütfen Giriş Yapınız") , <Navigate to="/" /> )
     
   )
 }

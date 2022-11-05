@@ -6,7 +6,7 @@ const MovieDetail = () => {
   return (
     
     <div>
-        
+        sadık
         
     </div>
   )
