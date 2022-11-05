@@ -19,7 +19,7 @@ const Navbar = () => {
               alt="Flowbite Logo"
             />
             <span className="self-center text-2xl font-semibold whitespace-nowrap ">
-              Movie React App
+              Movie App
             </span>
           </div>
           <div className="w-auto mb-2" id="navbar-default">
