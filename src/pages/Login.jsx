@@ -6,7 +6,7 @@ import LoginImages from "../helper/images/images.jpg"
 
 const Login = () => {
   const navigate = useNavigate();
-  const { loginUser, setloginUser, dark, setDark } =
+  const { loginUser, setloginUser, dark} =
     UseLoginContext();
   const handleClick = (e) => {
     e.preventDefault();

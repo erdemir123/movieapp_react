@@ -55,7 +55,6 @@ export const userObserver = (setCurrentUser) => {
 
 export const logOut = () => {
   signOut(auth);
-  
   toastWarnNotify("logged out successfully");
 };
 
