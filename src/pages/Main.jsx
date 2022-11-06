@@ -35,7 +35,7 @@ const Main = () => {
         })}
       </div>
       <btn
-        className="fixed top-[26px] right-4 bg-slate-200 w-20 h-16 rounded-md text-white font-bold z-50 group"
+        className="fixed bottom-[10px] right-4 bg-slate-200 w-20 h-16 rounded-md text-white font-bold z-50 group"
         onClick={() => setDark(!dark)}
       >
         <div className="bg-black w-[90%] h-[30px] mx-auto line-through mt-2 rounded-2xl flex items-center ">
