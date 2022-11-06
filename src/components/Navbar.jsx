@@ -1,9 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { logOut } from "../auth/firebase";
 import { UseLoginContext } from "../context/LoginProvider";
+import Unknown from "../helper/images/unknown.jpg"
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
 const Navbar = () => {
-  // const navigate = useNavigate()
-  const { loginUser, setloginUser, dark } = UseLoginContext();
+  const { currentUser, dark } = UseLoginContext();
+  const navigate = useNavigate();
   return (
     <div>
       <nav
@@ -19,26 +24,43 @@ const Navbar = () => {
           </div>
           <div className="w-auto mb-2" id="navbar-default">
             <ul className="flex gap-4 p-4 mt-4 bg-gray-200 rounded-lg  text-gray-500 font-bold ">
-              {!loginUser.email || !loginUser.password ? (
-                <Link className="hover:text-gray-400" to="/login">
-                  Login
-                </Link>
-              ) : (
-                <Link
-                  className="hover:text-gray-400"
-                  to="/"
-                  onClick={() => setloginUser({ email: "", password: "" })}
-                >
-                  LogOut
-                </Link>
+              {currentUser ? (
+                <div className="flex gap-4 items-center">
+                  <img
+                    src={currentUser?.photoURL ? currentUser?.photoURL : Unknown}
+                    alt=""
+                    className="w-8 rounded-full"
+                  />
+                  <h5 className="bg-slate-400 py-1 px-2 rounded-md text-white active:scale-95">
+                    {currentUser?.displayName ? currentUser?.displayName :"user"}
+                  </h5>
+                  <button
+                    onClick={logOut}
+                    className="bg-slate-400 py-1 px-2 rounded-md text-white active:scale-95"
+                  >
+                    LogOut
+                  </button>
+                </div>
+              ) : (<div className="flex gap-4 items-center">
+                  <button
+                    onClick={()=>navigate("/login")}
+                    className="bg-slate-400 py-1 px-2 rounded-md text-white active:scale-95"
+                  >
+                    Login
+                  </button>
+                  <button
+                    onClick={()=>navigate("/register")}
+                    className="bg-slate-400 py-1 px-2 rounded-md text-white active:scale-95"
+                  >
+                    Register
+                  </button>
+                </div>
               )}
-              <Link className="hover:text-gray-400" to="/register">
-                Register
-              </Link>
             </ul>
           </div>
         </div>
       </nav>
+      <ToastContainer />
     </div>
   );
 };

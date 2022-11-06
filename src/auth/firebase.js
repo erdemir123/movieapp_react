@@ -1,10 +1,17 @@
 // Import the functions you need from the SDKs you need
 
 import { initializeApp } from "firebase/app";
-import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,signOut, updateProfile,onAuthStateChanged, GoogleAuthProvider, signInWithPopup} from "firebase/auth";
-
-
-
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  updateProfile,
+  onAuthStateChanged,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
+import { toastSuccessNotify, toastErrorNotify, toastWarnNotify } from "../helper/Toastfy.jsx";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAzwJMxOCdYBeYTD-byDeq2Mb1u4U8TZFE",
@@ -20,58 +27,64 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const provider = new GoogleAuthProvider();
 
-
-export const createUser = async (email,password,navigate,displayName) => {
+export const createUser = async (email, password, navigate, displayName) => {
   try {
-    let userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    await updateProfile(auth.currentUser, {displayName: displayName})
-    console.log(userCredential)
-    navigate("/")
+    let userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    await updateProfile(auth.currentUser, { displayName: displayName });
+    console.log(userCredential);
+    toastSuccessNotify("Registered is successfully!")
+    navigate("/login");
+  } catch (error) {
+    toastErrorNotify(error.message);
   }
-  catch(error) {
-   alert(error.message)
-  }
-
-}
-export const logOut = () => {
-  signOut(auth);
-  alert("logged out successfully");
 };
 
 export const userObserver = (setCurrentUser) => {
   onAuthStateChanged(auth, (currentUser) => {
     if (currentUser) {
       setCurrentUser(currentUser);
-      console.log(currentUser);
-    
     } else {
       setCurrentUser(false);
     }
   });
 };
 
-// export const singInWithGoogle = () =>signInWithPopup(auth, provider)
-export const signIn =async (email,password,navigate)=>{
-  try {
-    let userCredential = await signInWithEmailAndPassword(auth, email, password);
-    console.log(userCredential)
-    navigate("/")
-  }
-  catch(error) {
-   alert(error.message)
-  }
+export const logOut = () => {
+  signOut(auth);
   
-}
+  toastWarnNotify("logged out successfully");
+};
 
+export const signIn = async (email, password, navigate) => {
+  try {
+     await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    navigate("/");
+     toastSuccessNotify("Login successfully!")
+  } catch (error) {
+    toastErrorNotify(error.message);
+  }
+};
 
-export const signUpProvider = (navigate)=> {
+export const signUpProvider = (navigate) => {
+  //? Google ile giriş yapılması için kullanılan firebase metodu
   const provider = new GoogleAuthProvider();
+  //? Açılır pencere ile giriş yapılması için kullanılan firebase metodu
   signInWithPopup(auth, provider)
-  .then((result) => {
-    console.log(result);
-    navigate("/")
-
-  }).catch((error) => {
-    console.log(error);
-  });
-}
+    .then((result) => {
+      console.log(result);
+      navigate("/");
+      toastSuccessNotify("Login successfully!!");
+    })
+    .catch((error) => {
+      // Handle Errors here.
+      toastErrorNotify(error);
+    });
+};

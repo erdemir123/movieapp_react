@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UseLoginContext } from "../context/LoginProvider";
 import { signIn, signUpProvider } from "../auth/firebase";
+import LoginImages from "../helper/images/images.jpg"
 
 const Login = () => {
   const navigate = useNavigate();
@@ -11,17 +12,17 @@ const Login = () => {
     e.preventDefault();
     signIn(loginUser.email, loginUser.password, navigate);
   };
-  const handleGoogleLogin = () => {
+  const handleLogin=()=>{
     signUpProvider(navigate)
   }
   return (
     <div
       className={
-        dark ? "h-[100vh] lg:flex bg-black " : "h-[100vh] lg:flex bg-gray-200 "
+        dark ? "h-[100vh] md:flex bg-black items-center relative" : "h-[100vh] md:flex bg-gray-200 items-center relative"
       }
     >
-
-      <form className="mt-12 flex flex-col justify-center lg:w-[50%] lg:h-[400px] lg:mt-64 lg:mr-8 bg-gray-300 rounded-2xl shadow-lg shadow-white py-4 mx-8">
+<img src={LoginImages} className="w-[90%] h-[350px] mx-auto rounded-md pt-2 shadow-md shadow-gray-600 md:w-[50%] md:h-[80vh] md:ml-4" alt="resim"></img>
+      <form className="mt-12 flex flex-col justify-center md:w-[50%] md:h-[400px] md:mt-32 md:mr-8 bg-gray-300 rounded-2xl shadow-lg shadow-white py-4 mx-8">
         <div className="mb-6 w-full px-20 ">
           <label
             htmlFor="email"
@@ -73,8 +74,8 @@ const Login = () => {
         </div>
         <div
           type="submit"
-          className="text-white bg-slate-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-[250px] mx-auto sm:w-auto px-14 py-2.5  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mb-4"
-          onClick={handleGoogleLogin}
+          className="text-white bg-slate-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-[280px] mx-auto sm:w-auto px-14 py-2.5  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mb-4"
+          onClick={handleLogin}
         >
           SIGN IN WİTH GOOGLE
         </div>
@@ -83,21 +84,11 @@ const Login = () => {
           type="submit"
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-[100px] mx-auto sm:w-auto px-5 py-2.5  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           onClick={handleClick}
+        
         >
           Submit
         </button>
       </form>
-
-      <button
-        className={
-          dark
-            ? "fixed bottom-6 right-4 bg-gray-400 w-16 h-16 rounded-full text-black font-bold"
-            : "fixed bottom-6 right-4 bg-gray-400 text-white w-16 h-16 rounded-full font-bold"
-        }
-        onClick={() => setDark(!dark)}
-      >
-        {dark ? "light" : "dark"}
-      </button>
     </div>
   );
 };

@@ -1,14 +1,19 @@
 import { useContext } from "react";
+import { useEffect } from "react";
 import { createContext } from "react";
 import { useState } from "react";
+import { userObserver } from "../auth/firebase"
 
 export const LoginContext = createContext();
 const LoginProvider = ({ children }) => {
+  const [currentUser, setCurrentUser] = useState("")
   const [loginUser, setloginUser] = useState({ email: "", password: "" });
-  const [register, setRegister] = useState({ email: "", password: "",name:""});
+  useEffect(() => {
+    userObserver(setCurrentUser);
+  }, [])
   const [query, setQuery] = useState("");
   const [dark, setDark] = useState(false);
-  const values = { loginUser, setloginUser, query, setQuery, dark, setDark,register,setRegister };
+  const values = { loginUser, setloginUser, query, setQuery, dark, setDark,currentUser };
   return (
     <LoginContext.Provider value={values}>{children}</LoginContext.Provider>
   );

@@ -1,23 +1,25 @@
 import React from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createUser } from "../auth/firebase";
 import Navbar from "../components/Navbar";
-import { UseLoginContext } from "../context/LoginProvider";
 
 const Register = () => {
   const navigate = useNavigate();
-  const { register, setRegister } = UseLoginContext();
-  const createUserRegister = async () => {
+  const [register, setRegister] = useState({ email: "", password: "", name:""});
+  const createUserRegister = (e) => {
+    e.preventDefault()
     const displayName = register.name
     const email = register.email
     const password = register.password
-    createUser(email, password, displayName,navigate);
+    createUser(email, password,navigate,displayName);
     console.log(email, password, displayName);
   };
   return (
     <div>
       <Navbar />
-      <div className="flex flex-col justify-center items-center  p-6 rounded-lg  w-full mt-[200px] ">
+      <img src="https://i.pinimg.com/originals/8c/10/f1/8c10f1a675f4172aa88332f6c4b1ac9e.gif" alt="" className=" w-80 mx-auto mt-36"/>
+      <div className="flex flex-col justify-center items-center  p-6 rounded-lg  w-full mt-[20px] ">
         <div className="flex flex-col justify-center  p-6 rounded-lg max-w-sm  border-2 w-full">
           <form>
             <div className="form-group mb-6">
@@ -144,6 +146,7 @@ const Register = () => {
           </form>
         </div>
       </div>
+      
     </div>
   );
 };
