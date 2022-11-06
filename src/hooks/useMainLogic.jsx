@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api_key, api_url, base_url } from "../constants/API";
 import { UseLoginContext } from "../context/LoginProvider";
-import Swal from 'sweetalert2'
+
 
 
 
